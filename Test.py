@@ -1,5 +1,3 @@
-import pandas as pd
-import numpy as np
 import xml.etree.ElementTree as ET
 import zipfile
 from iteration_utilities import duplicates
@@ -12,13 +10,14 @@ from iteration_utilities import duplicates
 xml = "export_full.xml"
 tree=ET.parse(xml)
 root=tree.getroot()
-
+##prints a list of dictionaries with the product code as the key and product name as the value
 def items():
-    list1 = []
+    item_list = []
     for z in root.find("items"):
         list1.append({z.attrib["code"] : z.attrib["name"]})
-    return list1
+    return item_list
 
+##prints a list of dictionaries with the name of the product as the key and the name of spare part as the value
 def spare_parts():
     spare_part_list = []
     for z in root.find("items"):
@@ -47,4 +46,4 @@ while True:
     else:
         print("Please don't use digits")
 
-
+##if there is a next part please add code so that the user can use the item code from items() to pull the product name key from spare_parts to help the user call the spare part's name easily.
