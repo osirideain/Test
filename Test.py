@@ -3,15 +3,22 @@ import numpy as np
 import xml.etree.ElementTree as ET
 import zipfile
 from iteration_utilities import duplicates
+##script used to extract zipped xml
 ##with zipfile.ZipFile(r"D:\PY\astra_export_xml.zip","r") as zip_ref:
 ##    zip_ref.extractall("D:\PY")
 
-##sub_tags = ['items', 'categories', 'categoriesWithParts','categoriesNew',
-##            'brands', 'itemSpecs', 'partCategories', 'discontinuedItems']
+
 
 xml = "export_full.xml"
 tree=ET.parse(xml)
 root=tree.getroot()
+
+def items():
+    list1 = []
+    for z in root.find("items"):
+        list1.append({z.attrib["code"] : z.attrib["name"]})
+    return list1
+
 def spare_parts():
     spare_part_list = []
     for z in root.find("items"):
@@ -20,13 +27,6 @@ def spare_parts():
                 for item in part:
                     spare_part_list.append({item.attrib["name"] : part.attrib["name"] })
     return spare_part_list
-
-def items():
-    list1 = []
-    for z in root.find("items"):
-        list1.append({z.attrib["code"] : z.attrib["name"]})
-
-    return list1
 
 while True:
     user = input("Enter total, product, spares or finished:  ")
